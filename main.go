@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	_ "fmt"
 )
 
 type GtOrdering[S any] interface {
@@ -17,7 +16,7 @@ func ShowGtOrdering[O GtOrdering[S], S fmt.Stringer](o O, a S, b S) {
 type Ordering[S any] interface {
 	Equiv(a S, b S) bool
 	Lt(a S, b S) bool
-	GtOrdering[S]
+	Gt(a S, b S) bool
 }
 
 // ShowOrdering generic show ordering function
@@ -131,4 +130,10 @@ func main() {
 	ByFactorShowOrdering(io, myInt(2), myInt(5))
 
 	// ByFactorShowOrdering(bo, oneButterfly, twoButterfly) -- compiler error: Butterfly does not implement StringerSignedInteger
+	ints := make([]myInt, 0, 0)
+	ints = append(ints, 3, 2, 5, 8, 0, 40, 7, 11, 10)
+	sorted := Sorted(io, ints)
+
+	fmt.Printf("\n")
+	fmt.Printf("%v", sorted)
 }
